@@ -1,0 +1,93 @@
+<%- layout("./layouts/boilerplate.ejs") %>
+
+    <body>
+        <div class="d-flex flex-column  align-items-center   vh-100 ">
+            <h1 class=" ">
+                <%= listing.title %>
+            </h1>
+            <div class="card card-show" style="width: 25rem;">
+                <img src="<%= listing.image %>" style="height: 15rem;" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">
+                        <%= listing.description %>.</p>
+                    <p class="card-text"> <b>Price:</b> <b>&#8377;</b>
+                        <%= listing.price.toLocaleString('en-IN')  %>
+                    </p>
+                    <div class="address d-flex justify-content-between ">
+                        <p class="card-text"><b>City:</b>
+                            <%= listing.location %>.</p>
+                        <p class="card-text"><b>Country:</b>
+                            <%= listing.country %>.</p>
+                    </div>
+                    <div class="action d-flex justify-content-between ">
+                        <a href="/listing/<%= listing._id%>/update" class="btn btn-primary px-4">Edit Data</a>
+                        <form action="/listing/<%= listing._id%>?_method=DELETE" method="post">
+                            <button class="btn btn-danger" id="delBtn">Delete Data</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class=" offset-3 ">
+
+            <h1>Give Review</h1>
+            <form action="/listing/new/<%= listing._id%>/reviews" novalidate class="needs-validation " method="post">
+
+                <div class="mb-3">
+                    <label class="form-label" for="price">Rating</label>
+                    <input type="range" min="1" max="5" class="form-range " required name="rating" id="rating">
+
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Add Comment</label>
+                    <input type="textArea" class="form-control  " required name="comment" id="comment">
+                    <div class="invalid-feedback ">comment is must required</div>
+                </div>
+                <div class="mb-3">
+
+                    <input type="submit" class=" btn-outline-dark btn ">
+                </div>
+
+
+
+            </form>
+
+        </div>
+
+        <div class="row offset-3">
+
+            <% for( review of listing.reviews) { %>
+
+                <div class="card col-5 mx-2 mb-3" style="">
+                    <div class="card-body">
+                        <h5 class="card-title">John due</h5>
+                        <p class="card-text">
+                            <%= review.createAt[0] %>
+                        </p>
+
+                        <p class="card-text">
+                            <%= review.comment %>
+                        </p>
+                        <p class="card-text">
+                            <%= review.rating %>stars</p>
+
+                        <form action="/listing/new/<%= listing._id%>/reviews/<%= review._id%>?_method=DELETE" method="post">
+                            <button class="btn btn-outline-dark ">Delete</button></form>
+                    </div>
+                </div>
+
+                <% } %>
+
+        </div>
+
+
+        </div>
+    </body>
+    <script>
+        const btn = document.getElementById("delBtn");
+        btn.addEventListener('click', () => {
+            alert('confirm to delete')
+        })
+    </script>

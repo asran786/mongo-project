@@ -1,0 +1,28 @@
+<%- layout("./layouts/boilerplate.ejs") %>
+    <%= success %>
+
+        <body>
+            <div class="row row-cols-lg-3 row-cols-md-2 all-cards">
+
+                <% for( data of data ) { %>
+                    <a href="/listing/<%=data._id%>" class="text-decoration-none ">
+                        <div class="card mt-5 border-0">
+                            <img src="<%=data.image %>" class="card-img-top rounded-3" style="height: 20rem;" alt="...">
+                            <div class="card-body">
+                                <p class="card-text">
+
+                                    <%= data.title.toLocaleString('en-IN') %>
+                                </p>
+                                <p class="card-text">
+                                    &#8377
+                                    <%= data.price.toLocaleString('en-IN') %>/night
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <% } %>
+            </div>
+
+
+        </body>
